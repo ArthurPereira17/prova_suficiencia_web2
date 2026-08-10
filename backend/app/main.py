@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
 from app import models  # garante que os models sejam registrados antes do create_all
-from app.routers import equipamentos, tipos, auth_router
+from app.routers import equipamentos, tipos, auth_router, usuarios
 
 # Cria as tabelas no MySQL automaticamente a partir dos models (ORM) -- requisito 2
 Base.metadata.create_all(bind=engine)
@@ -35,6 +35,7 @@ app.add_middleware(
 app.include_router(auth_router.router)
 app.include_router(tipos.router)
 app.include_router(equipamentos.router)
+app.include_router(usuarios.router)
 
 
 @app.get("/", tags=["Status"])

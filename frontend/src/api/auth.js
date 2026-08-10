@@ -13,3 +13,9 @@ export async function login(username, password) {
   });
   return data.access_token;
 }
+
+// Cadastro de novo usuário (JSON, não form -- ver auth_router.py)
+export async function registrar(username, senha) {
+  const { data } = await axios.post(`${BASE_URL}/auth/registrar`, { username, senha });
+  return data;
+}

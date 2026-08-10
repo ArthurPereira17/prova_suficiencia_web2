@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import Nav from "../components/Nav";
 
 export default function Login() {
   const { login } = useAuth();
@@ -25,6 +26,8 @@ export default function Login() {
   }
 
   return (
+    <div className="shell">
+      <Nav />
     <div className="login-screen">
       <div className="login-card">
         <div className="eyebrow">RestAPIFurb</div>
@@ -61,7 +64,12 @@ export default function Login() {
         <div className="hint">
           usuário de teste (seed.py): admin / admin123
         </div>
+
+        <div className="hint" style={{ marginTop: 10 }}>
+          Não tem conta? <Link to="/cadastro">Cadastre-se</Link>
+        </div>
       </div>
+    </div>
     </div>
   );
 }

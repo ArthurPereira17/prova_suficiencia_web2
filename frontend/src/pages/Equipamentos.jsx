@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import Nav from "../components/Nav";
 import {
   listarEquipamentos,
   criarEquipamento,
@@ -11,7 +12,7 @@ import { listarTipos } from "../api/tipos";
 const FORM_VAZIO = { nome: "", tipo_id: "" };
 
 export default function Equipamentos() {
-  const { logout } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const [equipamentos, setEquipamentos] = useState([]);
   const [tipos, setTipos] = useState([]);
@@ -84,12 +85,7 @@ export default function Equipamentos() {
 
   return (
     <div className="shell">
-      <header className="topbar">
-        <div className="brand">
-          RestAPIFurb <small>Patrimônio</small>
-        </div>
-        <button onClick={logout}>Sair</button>
-      </header>
+      <Nav />
 
       <main className="content">
         <div className="page-header">
@@ -101,52 +97,61 @@ export default function Equipamentos() {
 
         {erro && <div className="error-msg">{erro}</div>}
 
-        <form className="equip-form" onSubmit={handleSubmit}>
-          <div className="field">
-            <label htmlFor="nome">Nome do equipamento</label>
-            <input
-              id="nome"
-              value={form.nome}
-              onChange={(e) => setForm({ ...form, nome: e.target.value })}
-              placeholder="Ex: Notebook Dell"
-              required
-            />
+        {!isAuthenticated && (
+          <div className="hint" style={{ marginBottom: 20 }}>
+            Você está vendo os equipamentos como visitante. Entre para poder adicionar, editar
+            ou remover.
           </div>
-          <div className="field">
-            <label htmlFor="tipo">Tipo</label>
-            <select
-              id="tipo"
-              value={form.tipo_id}
-              onChange={(e) => setForm({ ...form, tipo_id: e.target.value })}
-              required
-              style={{
-                width: "100%",
-                padding: "10px 12px",
-                border: "1px solid var(--line)",
-                borderRadius: "6px",
-                fontSize: "0.95rem",
-                background: "#fbfcfc",
-              }}
-            >
-              <option value="" disabled>
-                Selecione...
-              </option>
-              {tipos.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.nome}
+        )}
+
+        {isAuthenticated && (
+          <form className="equip-form" onSubmit={handleSubmit}>
+            <div className="field">
+              <label htmlFor="nome">Nome do equipamento</label>
+              <input
+                id="nome"
+                value={form.nome}
+                onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                placeholder="Ex: Notebook Dell"
+                required
+              />
+            </div>
+            <div className="field">
+              <label htmlFor="tipo">Tipo</label>
+              <select
+                id="tipo"
+                value={form.tipo_id}
+                onChange={(e) => setForm({ ...form, tipo_id: e.target.value })}
+                required
+                style={{
+                  width: "100%",
+                  padding: "10px 12px",
+                  border: "1px solid var(--line)",
+                  borderRadius: "6px",
+                  fontSize: "0.95rem",
+                  background: "#fbfcfc",
+                }}
+              >
+                <option value="" disabled>
+                  Selecione...
                 </option>
-              ))}
-            </select>
-          </div>
-          <button className="btn-primary" disabled={salvando}>
-            {salvando ? "Salvando..." : editandoId ? "Salvar alterações" : "Adicionar"}
-          </button>
-          {editandoId && (
-            <button type="button" className="btn-ghost" onClick={cancelarEdicao}>
-              Cancelar
+                {tipos.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.nome}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button className="btn-primary" disabled={salvando}>
+              {salvando ? "Salvando..." : editandoId ? "Salvar alterações" : "Adicionar"}
             </button>
-          )}
-        </form>
+            {editandoId && (
+              <button type="button" className="btn-ghost" onClick={cancelarEdicao}>
+                Cancelar
+              </button>
+            )}
+          </form>
+        )}
 
         {carregando ? (
           <p className="loading">Carregando equipamentos...</p>
@@ -159,12 +164,14 @@ export default function Equipamentos() {
                 <span className="tag-id">#{String(eq.id).padStart(4, "0")}</span>
                 <h3>{eq.nome}</h3>
                 <span className="badge">{eq.tipo.nome}</span>
-                <div className="actions">
-                  <button onClick={() => iniciarEdicao(eq)}>Editar</button>
-                  <button className="danger" onClick={() => handleRemover(eq.id)}>
-                    Remover
-                  </button>
-                </div>
+                {isAuthenticated && (
+                  <div className="actions">
+                    <button onClick={() => iniciarEdicao(eq)}>Editar</button>
+                    <button className="danger" onClick={() => handleRemover(eq.id)}>
+                      Remover
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
