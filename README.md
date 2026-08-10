@@ -51,7 +51,7 @@ cp .env.example .env
 
 # Cria o banco no seu MySQL (ajuste usuário/senha se necessário):
 mysql -u root -e "CREATE DATABASE furb_suficiencia CHARACTER SET utf8mb4;"
-mysql -u root -e "CREATE USER 'furb'@'localhost' IDENTIFIED BY 'furb123'; GRANT ALL PRIVILEGES ON furb_suficiencia.* TO 'furb'@'localhost'; FLUSH PRIVILEGES;"
+mysql -u root -e "CREATE USER 'root' IDENTIFIED BY '3524'; GRANT ALL PRIVILEGES ON furb_suficiencia.* TO 'root'; FLUSH PRIVILEGES;"
 
 # Popula com dados de exemplo + usuário admin/admin123
 python seed.py
