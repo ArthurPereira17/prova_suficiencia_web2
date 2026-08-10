@@ -5,9 +5,13 @@ Documentação Swagger gerada automaticamente pelo FastAPI em /docs (requisito 4
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.database import Base, engine
+from lib.database import Base, engine
 from app import models  # garante que os models sejam registrados antes do create_all
-from app.routers import equipamentos, tipos, auth_router, usuarios
+from app.RestApiFurb.equipamentos import route as equipamentos
+from app.RestApiFurb.tipos import route as tipos
+from app.RestApiFurb.login import route as auth_router
+from app.RestApiFurb.users import route as usuarios
+from app.RestApiFurb.docs import route as docs
 
 # Cria as tabelas no MySQL automaticamente a partir dos models (ORM) -- requisito 2
 Base.metadata.create_all(bind=engine)
@@ -36,6 +40,7 @@ app.include_router(auth_router.router)
 app.include_router(tipos.router)
 app.include_router(equipamentos.router)
 app.include_router(usuarios.router)
+app.include_router(docs.router)
 
 
 @app.get("/", tags=["Status"])

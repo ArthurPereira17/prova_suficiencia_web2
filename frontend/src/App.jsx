@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Equipamentos from "./pages/Equipamentos";
 import Usuarios from "./pages/Usuarios";
+import Docs from "./pages/Docs";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/docs" element={<Docs />} />
 
           {/* Protegida: só aparece depois de logar */}
           <Route

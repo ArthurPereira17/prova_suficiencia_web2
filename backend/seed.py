@@ -3,9 +3,9 @@ Popula o banco com dados de exemplo (iguais aos do enunciado) e cria um
 usuário de teste para autenticação.
 Rodar com: python seed.py
 """
-from app.database import SessionLocal, Base, engine
+from lib.database import SessionLocal, Base, engine
 from app.models import Tipo, Equipamento, Usuario
-from app.auth import hash_senha
+from lib.auth import hash_senha
 
 Base.metadata.create_all(bind=engine)
 db = SessionLocal()

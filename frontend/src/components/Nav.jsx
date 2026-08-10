@@ -14,6 +14,9 @@ export default function Nav() {
           <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
             Equipamentos
           </NavLink>
+          <NavLink to="/docs" className={({ isActive }) => (isActive ? "active" : "")}>
+            Swagger
+          </NavLink>
           {isAuthenticated && (
             <NavLink to="/usuarios" className={({ isActive }) => (isActive ? "active" : "")}>
               Usuários
