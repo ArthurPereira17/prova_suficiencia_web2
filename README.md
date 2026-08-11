@@ -96,19 +96,3 @@ curl -X POST http://localhost:8080/RestAPIFurb/equipamentos \
 
 No Swagger (`/docs`) também dá pra usar o botão **Authorize** e colar usuário/senha
 direto (ele já usa o endpoint de login).
-
-## Publicando no GitHub (prazo: 12/08/2026)
-
-```bash
-cd prova-suficiencia
-git init
-git add .
-git commit -m "Prova de suficiência - Programação Web II"
-git branch -M main
-git remote add origin <URL_DO_SEU_REPOSITORIO>
-git push -u origin main
-```
-
-Depois envie o link do repositório para **LPA@FURB.BR**.
-
-Veja também `NOTES-arguicao.md` com um roteiro de estudo pra arguição oral do dia 13/08.
